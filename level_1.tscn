@@ -1,0 +1,94 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpdoijfdjvjhw"]
+
+[ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6drlj"]
+albedo_texture = ExtResource("1_aq6yt")
+uv1_triplanar = true
+
+[sub_resource type="GDScript" id="GDScript_4vqol"]
+resource_name = "player"
+script/source = "extends CharacterBody3D
+
+
+var current_speed = 5.0
+@onready var head = $Head
+@export var walking_speed = 5.0
+@export var sprinting_speed = 8.0
+@export var crouching_speed = 3.0
+@export var mouse_sensitivity = .003
+
+var jump_velocity = 4.5
+
+var lerp_speed = 10.0
+
+var direction = Vector3.ZERO
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity = ProjectSettings.get_setting(\"physics/3d/default_gravity\")
+
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+func _input(event):
+	if event.is_action_pressed(\"ui_cancel\"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	if event is InputEventMouseButton and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _physics_process(delta):
+	
+	if Input.is_action_pressed(\"sprint\"):
+		current_speed = sprinting_speed
+	else:
+		current_speed = walking_speed
+	
+
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+
+	if Input.is_action_just_pressed(\"jump\") and is_on_floor():
+		velocity.y = jump_velocity
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector(\"left\", \"right\", \"forward\", \"backward\")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
+
+	move_and_slide()
+	
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		rotation.y -= event.relative.x * mouse_sensitivity
+		head.rotation.x -= event.relative.y * mouse_sensitivity
+		head.rotation_degrees.x = clamp(head.rotation_degrees.x, -89,89)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m5bfw"]
+
+[node name="Level1" type="Node3D"]
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_6drlj")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = SubResource("GDScript_4vqol")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_m5bfw")
+
+[node name="Head" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
