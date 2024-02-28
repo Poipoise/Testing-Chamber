@@ -7,18 +7,28 @@ script/source = "extends CharacterBody3D
 
 
 #playernodes
-@onready var head = $Head
+@onready var neck = $Neck
+@onready var head = $Neck/Head
 @onready var standing_collision_shape = $standing_collision_shape
 @onready var crouching_collision_shape = $crouching_collision_shape
 @onready var ray_cast_3d = $RayCast3D
+@onready var camera_3d = $Neck/Head/Camera3D
+
 #Speed vars
 @export var walking_speed = 5.0
 @export var sprinting_speed = 8.0
 @export var crouching_speed = 3.0
 var current_speed = 5.0
+
+var walking = false
+var sprinting = false 
+var crouching = false
+var sliding = false
+var free_looking = false
 #movement vars
 var jump_velocity = 4.5
 var lerp_speed = 10.0
+var free_look_tilt_amount = -8
 #Input vars
 @export var mouse_sensitivity = .003
 var direction = Vector3.ZERO
@@ -38,17 +48,36 @@ func _input(event):
 func _physics_process(delta):
 	if Input.is_action_pressed(\"crouch\"):
 		current_speed = crouching_speed
-		head.position.y = lerp(head.position.y,1.8 + crouching_depth, delta * lerp_speed)
+		head.position.y = lerp(head.position.y,crouching_depth, delta * lerp_speed)
 		standing_collision_shape.disabled = true
 		crouching_collision_shape.disabled = false
+		walking = false
+		sprinting = false 
+		crouching = true
 	elif !ray_cast_3d.is_colliding():
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
-		head.position.y = lerp(head.position.y,1.8, delta * lerp_speed)
+		head.position.y = lerp(head.position.y,0.0, delta * lerp_speed)
+		
 		if Input.is_action_pressed(\"sprint\"):
 			current_speed = sprinting_speed
+			walking = false
+			sprinting = true 
+			crouching = false
 		else:
 			current_speed = walking_speed
+			walking = true
+			sprinting = false 
+			crouching = false
+	
+	if Input.is_action_pressed(\"free_look\"):
+		free_looking = true
+		camera_3d.rotation.z = deg_to_rad(neck.rotation.y * free_look_tilt_amount)
+	else:
+		free_looking = false
+		neck.rotation.y = lerp(neck.rotation.y, 0.0, delta*lerp_speed)
+		camera_3d.rotation.z = lerp(camera_3d.rotation.z, 0.0, delta*lerp_speed)
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	if Input.is_action_just_pressed(\"jump\") and is_on_floor():
@@ -68,9 +97,13 @@ func _physics_process(delta):
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
-		rotation.y -= event.relative.x * mouse_sensitivity
-		head.rotation.x -= event.relative.y * mouse_sensitivity
-		head.rotation_degrees.x = clamp(head.rotation_degrees.x, -89,89)
+		if free_looking:
+			neck.rotation.y -= event.relative.x * mouse_sensitivity
+			neck.rotation.y = clamp(neck.rotation.y, deg_to_rad(-120),deg_to_rad(120))
+		else:
+			rotation.y -= event.relative.x * mouse_sensitivity
+			head.rotation.x -= event.relative.y * mouse_sensitivity
+			head.rotation_degrees.x = clamp(head.rotation_degrees.x, -89,89)
 "
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_stmkw"]
@@ -90,10 +123,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.725892, 0)
 shape = SubResource("CapsuleShape3D_m5bfw")
 disabled = true
 
-[node name="Head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Head"]
-
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 2, 0)
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Head" type="Node3D" parent="Neck"]
+
+[node name="Camera3D" type="Camera3D" parent="Neck/Head"]
