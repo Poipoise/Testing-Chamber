@@ -9,10 +9,12 @@ script/source = "extends CharacterBody3D
 #playernodes
 @onready var neck = $Neck
 @onready var head = $Neck/Head
+@onready var eyes = $Neck/Head/eyes
+
 @onready var standing_collision_shape = $standing_collision_shape
 @onready var crouching_collision_shape = $crouching_collision_shape
 @onready var ray_cast_3d = $RayCast3D
-@onready var camera_3d = $Neck/Head/Camera3D
+@onready var camera_3d = $Neck/Head/eyes/Camera3D
 
 #Speed vars
 @export var walking_speed = 5.0
@@ -35,7 +37,7 @@ var slide_timer_max = 1.0
 var slide_vector = Vector2.ZERO
 var slide_speed = 10
 
-const head_bobbing_sprinting_speed = 22.0
+const head_bobbing_sprinting_speed = 20.0
 const head_bobbing_walking_speed = 14.0
 const head_bobbing_crouching_speed = 10.0
 
@@ -117,8 +119,24 @@ func _physics_process(delta):
 			free_looking = false
 			print(\"done\")
 
-
-
+	if sprinting:
+		head_bobbing_current_intensity = head_bobbing_sprinting_intensity
+		head_bobbing_index += head_bobbing_sprinting_speed*delta
+	elif walking:
+		head_bobbing_current_intensity = head_bobbing_walking_intensity
+		head_bobbing_index += head_bobbing_walking_speed*delta
+	elif crouching: 
+		head_bobbing_current_intensity = head_bobbing_crouching_intensity
+	head_bobbing_index += head_bobbing_crouching_speed*delta
+	
+	if is_on_floor() && !sliding && input_dir != Vector2.ZERO:
+		head_bobbing_vector.y = sin(head_bobbing_index)
+		head_bobbing_vector.x = sin(head_bobbing_index/2)+0.5
+		eyes.position.y = lerp(eyes.position.y,head_bobbing_vector.y*(head_bobbing_current_intensity/2.0), delta*lerp_speed)
+		eyes.position.x = lerp(eyes.position.x,head_bobbing_vector.x*(head_bobbing_current_intensity), delta*lerp_speed)
+	else:
+		eyes.position.y = lerp(eyes.position.y,0.0,delta*lerp_speed)
+		eyes.position.x = lerp(eyes.position.x,0.0,delta*lerp_speed)
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	if Input.is_action_just_pressed(\"jump\") and is_on_floor():
@@ -179,4 +197,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Head" type="Node3D" parent="Neck"]
 
-[node name="Camera3D" type="Camera3D" parent="Neck/Head"]
+[node name="eyes" type="Node3D" parent="Neck/Head"]
+
+[node name="Camera3D" type="Camera3D" parent="Neck/Head/eyes"]

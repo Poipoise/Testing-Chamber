@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bpdoijfdjvjhw"]
+[gd_scene load_steps=6 format=3 uid="uid://bpdoijfdjvjhw"]
 
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
+[ext_resource type="Texture2D" uid="uid://dnvpkqkj1ec4b" path="res://texture_07.png" id="1_toaof"]
 [ext_resource type="PackedScene" uid="uid://d3l3lcd48ic5f" path="res://player.tscn" id="2_7o6dt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fy3wh"]
+albedo_texture = ExtResource("1_toaof")
+uv1_triplanar = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6drlj"]
 albedo_texture = ExtResource("1_aq6yt")
@@ -10,15 +15,33 @@ uv1_triplanar = true
 [node name="Level1" type="Node3D"]
 
 [node name="Floor" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.551053, 0)
 use_collision = true
 size = Vector3(20, 1, 20)
-material = SubResource("StandardMaterial3D_6drlj")
+material = SubResource("StandardMaterial3D_fy3wh")
 
 [node name="Floor2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.32868, 14.9224)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.91283, 10.2902)
 use_collision = true
-size = Vector3(20, 1, 20)
+size = Vector3(20, 20, 1)
+material = SubResource("StandardMaterial3D_6drlj")
+
+[node name="Floor5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.91283, -10.4875)
+use_collision = true
+size = Vector3(20, 20, 1)
+material = SubResource("StandardMaterial3D_6drlj")
+
+[node name="Floor3" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 10.5172, 9.91283, -0.0800667)
+use_collision = true
+size = Vector3(20, 20, 1)
+material = SubResource("StandardMaterial3D_6drlj")
+
+[node name="Floor4" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.478, 9.91283, -0.00028944)
+use_collision = true
+size = Vector3(20, 20, 1)
 material = SubResource("StandardMaterial3D_6drlj")
 
 [node name="Player" parent="." instance=ExtResource("2_7o6dt")]
