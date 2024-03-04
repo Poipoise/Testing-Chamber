@@ -1,8 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpdoijfdjvjhw"]
+[gd_scene load_steps=13 format=3 uid="uid://bpdoijfdjvjhw"]
 
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
+[ext_resource type="Texture2D" uid="uid://d1ndr8fv2qpin" path="res://small_empty_room_2_2k.exr" id="1_t5ush"]
 [ext_resource type="Texture2D" uid="uid://dnvpkqkj1ec4b" path="res://texture_07.png" id="1_toaof"]
 [ext_resource type="PackedScene" uid="uid://d3l3lcd48ic5f" path="res://player.tscn" id="2_7o6dt"]
+[ext_resource type="PackedScene" uid="uid://dlc0u26s2ji2g" path="res://glasswindow.blend" id="4_g5isb"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jnifj"]
+panorama = ExtResource("1_t5ush")
+
+[sub_resource type="Sky" id="Sky_g7w2x"]
+sky_material = SubResource("PanoramaSkyMaterial_jnifj")
+
+[sub_resource type="Environment" id="Environment_3t38x"]
+background_mode = 2
+sky = SubResource("Sky_g7w2x")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fy3wh"]
 albedo_texture = ExtResource("1_toaof")
@@ -12,7 +26,19 @@ uv1_triplanar = true
 albedo_texture = ExtResource("1_aq6yt")
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8umy"]
+transparency = 1
+diffuse_mode = 1
+albedo_color = Color(0.168627, 0.168627, 0.168627, 0.8)
+ao_light_affect = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_bwnkd"]
+material = SubResource("StandardMaterial3D_w8umy")
+
 [node name="Level1" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3t38x")
 
 [node name="Floor" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.551053, 0)
@@ -45,3 +71,10 @@ size = Vector3(20, 20, 1)
 material = SubResource("StandardMaterial3D_6drlj")
 
 [node name="Player" parent="." instance=ExtResource("2_7o6dt")]
+
+[node name="glasswindow" parent="." instance=ExtResource("4_g5isb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.2047, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("BoxMesh_bwnkd")
