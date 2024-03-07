@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0vtt534m1rnk"]
+
+[ext_resource type="PackedScene" uid="uid://cjq7phxxnekhp" path="res://scifi_button/scene.gltf" id="1_22rn6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjq7q"]
+size = Vector3(0.917338, 1.79166, 1.28564)
+
+[node name="Button" type="Node3D"]
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_22rn6")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_Scene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0144504, 1.02162, -0.0593262)
+shape = SubResource("BoxShape3D_sjq7q")
