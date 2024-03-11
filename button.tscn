@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwdigu7ypxxtr"]
+
+[ext_resource type="Script" path="res://button.gd" id="1_2b5lp"]
+[ext_resource type="PackedScene" uid="uid://d1xa4ki5i7ypx" path="res://low_poly_emergency_button/scene.gltf" id="1_lvue5"]
+
+[node name="button" type="Node3D" groups=["interactable"]]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.517335)
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_lvue5")]
+transform = Transform3D(-2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 0, 0, 0, 0.5, 0, 0, -1)
+
+[node name="StaticBody3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Boitier_0/Object_4" index="0" node_paths=PackedStringArray("animplayer") groups=["interactable"]]
+script = ExtResource("1_2b5lp")
+animplayer = NodePath("../../../../../../AnimationPlayer")
+
+[node name="StaticBody3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/PoussoirFrame_1/Object_6" index="0" node_paths=PackedStringArray("animplayer") groups=["interactable"]]
+script = ExtResource("1_2b5lp")
+animplayer = NodePath("../../../../../../AnimationPlayer")
+
+[node name="StaticBody3D" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bouton_2/Object_8" index="0" node_paths=PackedStringArray("animplayer") groups=["interactable"]]
+script = ExtResource("1_2b5lp")
+animplayer = NodePath("../../../../../../AnimationPlayer")
+
+[editable path="Sketchfab_Scene"]

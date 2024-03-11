@@ -1,44 +1,55 @@
-shader_type spatial;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-render_mode unshaded, shadows_disabled, depth_draw_never;
+// adapted from:
+// https://www.shadertoy.com/view/Ms3XWH
 
-uniform int color_depth : hint_range(1, 8) = 5;
-uniform bool dithering = true;
-uniform int resolution_scale = 4;
+shader_type canvas_item;
+uniform float shake: hint_range(0, 10) = 0.015;
+uniform float noiseQuality: hint_range(0.1, 250,0.1) = 250;
+uniform float noiseIntensity: hint_range(0, 0.05,0.001) = 0.001;
+uniform float offsetIntensity: hint_range(0, 0.05,0.0001) = 0.05;
+uniform float colorOffsetIntensity: hint_range(0.1, 1.5,0.001) = 0.5;
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
-int dithering_pattern(ivec2 fragcoord) {
-	const int pattern[] = {
-		-4, +0, -3, +1, 
-		+2, -2, +3, -1, 
-		-3, +1, -4, +0, 
-		+3, -1, +2, -2
-	};
-	
-	int x = fragcoord.x % 4;
-	int y = fragcoord.y % 4;
-	
-	return pattern[y * 4 + x];
+float rand(vec2 co)
+{
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
-void vertex() {
-	POSITION = vec4(VERTEX, 1.0);
+float verticalBar(float pos, float uvY, float offset)
+{
+    float edge0 = (pos - shake);
+    float edge1 = (pos + shake);
+
+    float x = smoothstep(edge0, pos, uvY) * offset;
+    x -= smoothstep(pos, edge1, uvY) * offset;
+    return x;
 }
+
 
 void fragment() {
-	ivec2 uv = ivec2(FRAGCOORD.xy / float(resolution_scale));
-	vec3 color = texelFetch(SCREEN_TEXTURE, uv * resolution_scale, 0).rgb;
+	vec2 iResolution = 1.0 / SCREEN_PIXEL_SIZE;
+	vec2 uv = FRAGCOORD.xy / iResolution.xy;
+    // why these values for i?
+    for (float i = 0.0; i < 0.71; i += 0.1313)
+    {
+        float d = mod(TIME * i, 1.7);
+        float o = sin(1.0 - tan(TIME * 0.24 * i));
+    	o *= offsetIntensity;
+        uv.x += verticalBar(d, uv.y, o);
+    }
+	float uvY = uv.y;
+    uvY *= noiseQuality;
+    uvY = float(int(uvY)) * (1.0 / noiseQuality);
+    float noise = rand(vec2(TIME* 0.00001, uvY));
+    uv.x += noise * noiseIntensity;
 	
-	// Convert from [0.0, 1.0] range to [0, 255] range
-	ivec3 c = ivec3(round(color * 255.0));
+	vec2 offsetR = vec2(0.006 * sin(TIME), 0.0) * colorOffsetIntensity;
+    vec2 offsetG = vec2(0.0073 * (cos(TIME * 0.97)), 0.0) * colorOffsetIntensity;
 	
-	// Apply the dithering pattern
-	if (dithering) {
-		c += ivec3(dithering_pattern(uv));
-	}
-	
-	// Truncate from 8 bits to color_depth bits
-	c >>= (8 - color_depth);
+	float r = texture(screen_texture, uv + offsetR).r;
+    float g = texture(screen_texture, uv + offsetG).g;
+    float b = texture(screen_texture, uv).b;
 
-	// Convert back to [0.0, 1.0] range
-	ALBEDO = vec3(c) / float(1 << color_depth);
+	//vec4 tex = vec4(r, g, b, 1.0);
+	vec4 tex=vec4(r, g, b,1.0);
+    COLOR = tex;
 }

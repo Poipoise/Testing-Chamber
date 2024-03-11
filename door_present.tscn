@@ -1,7 +1,72 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1o6cl3cvfm3j"]
+[gd_scene load_steps=6 format=3 uid="uid://d3mgdusg8j65j"]
 
-[ext_resource type="PackedScene" uid="uid://4injfvvdua1k" path="res://sci-fi_door_loops_animation/scene.gltf" id="1_d6ynt"]
+[ext_resource type="PackedScene" uid="uid://mfy2gnft14cb" path="res://fnaf_9_door_freddy/scene.gltf" id="1_6t0vo"]
+[ext_resource type="Script" path="res://door_present.gd" id="1_xko3r"]
 
-[node name="Door_present" type="Node3D"]
+[sub_resource type="Animation" id="Animation_d7fyy"]
+resource_name = "Open"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(575.41, 312.087, 3.05176e-05), Vector3(1934.79, 312.087, 3.05176e-05)]
+}
 
-[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_d6ynt")]
+[sub_resource type="Animation" id="Animation_2sbqn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(575.41, 312.087, 3.05176e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_44tm0"]
+_data = {
+"Open": SubResource("Animation_d7fyy"),
+"RESET": SubResource("Animation_2sbqn")
+}
+
+[node name="door_present" type="Node3D"]
+script = ExtResource("1_xko3r")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_6t0vo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
+
+[node name="������_001" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode" index="1"]
+transform = Transform3D(882.02, 0, 0, 0, -5.80482e-06, 1296.92, 0, -35.6297, -0.000211295, 575.41, 312.087, 3.05176e-05)
+
+[node name="������_001_����������������_001_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
+
+[node name="������_001_����������������_002_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
+
+[node name="������_001_����������������_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -4.44089e-16, 1, 0, 0, 0)
+
+[node name="������_001_����������������_004_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
+
+[node name="������_001_����������������_003_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sketchfab_Scene"]
+libraries = {
+"": SubResource("AnimationLibrary_44tm0")
+}
+
+[editable path="Sketchfab_Scene"]
