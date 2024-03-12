@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bpdoijfdjvjhw"]
+[gd_scene load_steps=15 format=3 uid="uid://bpdoijfdjvjhw"]
 
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
 [ext_resource type="Texture2D" uid="uid://d1ndr8fv2qpin" path="res://small_empty_room_2_2k.exr" id="1_t5ush"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://d3l3lcd48ic5f" path="res://player.tscn" id="2_7o6dt"]
 [ext_resource type="PackedScene" uid="uid://dlc0u26s2ji2g" path="res://glasswindow.blend" id="4_g5isb"]
 [ext_resource type="PackedScene" uid="uid://cwdigu7ypxxtr" path="res://button.tscn" id="6_vcupo"]
+[ext_resource type="PackedScene" uid="uid://d3mgdusg8j65j" path="res://door_present.tscn" id="7_vcpbi"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jnifj"]
 panorama = ExtResource("1_t5ush")
@@ -84,3 +85,22 @@ mesh = SubResource("BoxMesh_bwnkd")
 
 [node name="button" parent="." instance=ExtResource("6_vcupo")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -5.71141)
+
+[node name="StaticBody3D" parent="button/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Boitier_0/Object_4" index="0"]
+script = null
+
+[node name="StaticBody3D" parent="button/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/PoussoirFrame_1/Object_6" index="0"]
+script = null
+
+[node name="door_present" parent="." instance=ExtResource("7_vcpbi")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 1.00205, 8.35734)
+
+[node name="CollisionShape3D" parent="door_present/Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 1.77636e-15, 1, 0, 0, 0)
+
+[connection signal="door_open" from="button/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bouton_2/Object_8/StaticBody3D" to="door_present" method="_on_static_body_3d_door_open"]
+
+[editable path="button"]
+[editable path="button/Sketchfab_Scene"]
+[editable path="door_present"]
+[editable path="door_present/Sketchfab_Scene"]

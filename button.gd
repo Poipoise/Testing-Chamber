@@ -8,5 +8,6 @@ func interacted():
 	animplayer.play("Animation")
 	await animplayer.animation_finished
 	if not emitted:
+		print("emitted")
 		emitted = true
 		door_open.emit()

@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d3mgdusg8j65j"]
+[gd_scene load_steps=7 format=3 uid="uid://d3mgdusg8j65j"]
 
 [ext_resource type="PackedScene" uid="uid://mfy2gnft14cb" path="res://fnaf_9_door_freddy/scene.gltf" id="1_6t0vo"]
 [ext_resource type="Script" path="res://door_present.gd" id="1_xko3r"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n7m0i"]
+size = Vector3(2, 5, 2)
 
 [sub_resource type="Animation" id="Animation_d7fyy"]
 resource_name = "Open"
@@ -41,6 +44,7 @@ _data = {
 }
 
 [node name="door_present" type="Node3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.278066, 0.954495, 0)
 script = ExtResource("1_xko3r")
 
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("1_6t0vo")]
@@ -64,9 +68,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
 [node name="������_001_����������������_003_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
 
+[node name="Area3D" type="Area3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="5"]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 8.88178e-16, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_n7m0i")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sketchfab_Scene"]
 libraries = {
 "": SubResource("AnimationLibrary_44tm0")
 }
+
+[node name="Close_Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="Close_Timer" to="." method="_on_close_timer_timeout"]
 
 [editable path="Sketchfab_Scene"]
