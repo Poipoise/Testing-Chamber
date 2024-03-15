@@ -68,11 +68,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
 [node name="������_001_����������������_003_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, -8.88178e-16, 1, 0, 0, 0)
 
-[node name="Area3D" type="Area3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="5"]
-collision_mask = 3
+[node name="StaticBody3D" type="StaticBody3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001" index="5"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 8.88178e-16, 1, 0, 0, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������_001/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 2.22045e-15, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_n7m0i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sketchfab_Scene"]

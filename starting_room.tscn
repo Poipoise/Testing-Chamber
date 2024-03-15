@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://blq111v83eyri"]
+
+[ext_resource type="MeshLibrary" uid="uid://d0kh00ywmpydi" path="res://sci-fi-like Asset_Godot/sci-fi-like Asset/scenes/GridMaps/Walls.tres" id="1_qyqq7"]
+[ext_resource type="MeshLibrary" uid="uid://vxyw47ulyu6b" path="res://sci-fi-like Asset_Godot/sci-fi-like Asset/scenes/GridMaps/Rooms.tres" id="2_56i1b"]
+
+[node name="Starting_Room" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("1_qyqq7")
+data = {
+"cells": PackedInt32Array(65532, 65533, 2, 65535, 65533, 1, 2, 65533, 1, 5, 65530, 655362, 8, 65527, 9, 8, 65524, 9, 11, 65521, 1048593, 8, 65518, 1048577, 8, 65521, 1048592, 8, 65515, 1048577, 11, 65515, 655370, 65532, 0, 1048577, 65532, 3, 1048592, 65532, 6, 1048577, 65532, 9, 1048578, 65535, 12, 1, 0, 12, 1, 3, 12, 1, 6, 12, 1, 9, 12, 1, 11, 65530, 655377, 14, 65533, 1441794, 11, 9, 655361, 17, 0, 1048577, 17, 3, 1048577, 17, 6, 1048577, 14, 9, 1441802)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="GridMap2" type="GridMap" parent="."]
+mesh_library = ExtResource("2_56i1b")
+data = {
+"cells": PackedInt32Array(65532, 65533, 1, 65535, 65533, 3, 2, 65533, 3, 5, 65533, 3, 8, 65530, 1441795, 8, 65527, 1441795, 8, 65524, 1441795, 8, 65521, 1441795)
+}
