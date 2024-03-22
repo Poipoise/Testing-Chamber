@@ -17,6 +17,7 @@ sky_material = SubResource("PanoramaSkyMaterial_jnifj")
 
 [sub_resource type="Environment" id="Environment_3t38x"]
 background_mode = 2
+background_energy_multiplier = 0.5
 sky = SubResource("Sky_g7w2x")
 tonemap_mode = 2
 glow_enabled = true
@@ -100,3 +101,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 41)
 [editable path="button/Sketchfab_Scene"]
 [editable path="door_present"]
 [editable path="door_present/Sketchfab_Scene"]
+[editable path="Starting_Room"]
+[editable path="Starting_Room/Doors/Door_Fram"]
