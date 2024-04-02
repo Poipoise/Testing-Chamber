@@ -1,10 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpdoijfdjvjhw"]
+[gd_scene load_steps=15 format=3 uid="uid://bpdoijfdjvjhw"]
 
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
 [ext_resource type="Texture2D" uid="uid://d1ndr8fv2qpin" path="res://small_empty_room_2_2k.exr" id="1_t5ush"]
 [ext_resource type="Texture2D" uid="uid://dnvpkqkj1ec4b" path="res://texture_07.png" id="1_toaof"]
 [ext_resource type="PackedScene" uid="uid://d3l3lcd48ic5f" path="res://player.tscn" id="2_7o6dt"]
-[ext_resource type="PackedScene" uid="uid://dlc0u26s2ji2g" path="res://glasswindow.blend" id="4_g5isb"]
 [ext_resource type="PackedScene" uid="uid://cwdigu7ypxxtr" path="res://button.tscn" id="6_vcupo"]
 [ext_resource type="PackedScene" uid="uid://d3mgdusg8j65j" path="res://door_present.tscn" id="7_vcpbi"]
 [ext_resource type="PackedScene" uid="uid://blq111v83eyri" path="res://starting_room.tscn" id="8_7t42w"]
@@ -76,9 +75,6 @@ material = SubResource("StandardMaterial3D_6drlj")
 
 [node name="Player" parent="." instance=ExtResource("2_7o6dt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3359, 35)
-
-[node name="glasswindow" parent="." instance=ExtResource("4_g5isb")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.2047, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
