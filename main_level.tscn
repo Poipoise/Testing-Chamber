@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bpdoijfdjvjhw"]
+[gd_scene load_steps=14 format=3 uid="uid://bpdoijfdjvjhw"]
 
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="1_aq6yt"]
 [ext_resource type="Texture2D" uid="uid://d1ndr8fv2qpin" path="res://small_empty_room_2_2k.exr" id="1_t5ush"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cwdigu7ypxxtr" path="res://button.tscn" id="6_vcupo"]
 [ext_resource type="PackedScene" uid="uid://d3mgdusg8j65j" path="res://door_present.tscn" id="7_vcpbi"]
 [ext_resource type="PackedScene" uid="uid://blq111v83eyri" path="res://starting_room.tscn" id="8_7t42w"]
+[ext_resource type="PackedScene" uid="uid://dbog5yjmlfrn" path="res://main_room.tscn" id="8_hy2k4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jnifj"]
 panorama = ExtResource("1_t5ush")
@@ -28,15 +29,6 @@ uv1_triplanar = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6drlj"]
 albedo_texture = ExtResource("1_aq6yt")
 uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8umy"]
-transparency = 1
-diffuse_mode = 1
-albedo_color = Color(0.168627, 0.168627, 0.168627, 0.8)
-ao_light_affect = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_bwnkd"]
-material = SubResource("StandardMaterial3D_w8umy")
 
 [node name="main_level" type="Node3D"]
 
@@ -76,10 +68,6 @@ material = SubResource("StandardMaterial3D_6drlj")
 [node name="Player" parent="." instance=ExtResource("2_7o6dt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3359, 35)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-mesh = SubResource("BoxMesh_bwnkd")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="button" parent="." instance=ExtResource("6_vcupo")]
@@ -90,6 +78,9 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 1.00205, 8.35734)
 
 [node name="Starting_Room" parent="." instance=ExtResource("8_7t42w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 41)
+
+[node name="main_room" parent="." instance=ExtResource("8_hy2k4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.2701, -7.13036, 0)
 
 [connection signal="door_open" from="button/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bouton_2/Object_8/StaticBody3D" to="door_present" method="_on_static_body_3d_door_open"]
 
