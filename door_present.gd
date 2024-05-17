@@ -3,7 +3,7 @@ var closed = true
 var open = false
 
 
-func _on_static_body_3d_door_open():
+func door_open():
 	print("got signal")
 	if closed:
 		open = true

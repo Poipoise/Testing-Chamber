@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbog5yjmlfrn"]
+[gd_scene load_steps=10 format=3 uid="uid://dbog5yjmlfrn"]
 
 [ext_resource type="Texture2D" uid="uid://7coou147v6re" path="res://concrete_floor_worn_001_2k.gltf/textures/concrete_floor_worn_001_diff_2k.jpg" id="1_7njmy"]
 [ext_resource type="Texture2D" uid="uid://ks760leqb00o" path="res://concrete_floor_worn_001_2k.gltf/textures/concrete_floor_worn_001_nor_gl_2k.jpg" id="2_s2f6k"]
 [ext_resource type="Texture2D" uid="uid://hjiur7gyjsrv" path="res://concrete_floor_worn_001_2k.gltf/textures/concrete_floor_worn_001_rough_2k.jpg" id="3_yy6l0"]
 [ext_resource type="Texture2D" uid="uid://cumg2hd6rbvtv" path="res://texture_05.png" id="4_vf34g"]
 [ext_resource type="PackedScene" uid="uid://d3mgdusg8j65j" path="res://door_present.tscn" id="5_my8ef"]
+[ext_resource type="PackedScene" uid="uid://cwdigu7ypxxtr" path="res://button.tscn" id="6_sxjfy"]
+[ext_resource type="PackedScene" uid="uid://cbvo02v832lpb" path="res://sci-fi-like Asset_Godot/sci-fi-like Asset/scenes/Panels/panel_light.tscn" id="7_6atw4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ogq6"]
 albedo_texture = ExtResource("1_7njmy")
@@ -22,7 +24,7 @@ uv1_triplanar = true
 
 [node name="floor" type="CSGBox3D" parent="."]
 use_collision = true
-size = Vector3(20, 1, 20)
+size = Vector3(22, 0, 20)
 material = SubResource("StandardMaterial3D_8ogq6")
 
 [node name="Wall" type="CSGBox3D" parent="."]
@@ -33,12 +35,6 @@ material = SubResource("StandardMaterial3D_cbcl8")
 
 [node name="Wall2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -10.5)
-use_collision = true
-size = Vector3(20, 10, 1)
-material = SubResource("StandardMaterial3D_cbcl8")
-
-[node name="Wall3" type="CSGBox3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 4.5, 0)
 use_collision = true
 size = Vector3(20, 10, 1)
 material = SubResource("StandardMaterial3D_cbcl8")
@@ -56,10 +52,46 @@ size = Vector3(2, 10, 1)
 material = SubResource("StandardMaterial3D_cbcl8")
 
 [node name="Wall5" type="CSGBox3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.5, 4.5, -6)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.5, 4.5, -5.99864)
 use_collision = true
 size = Vector3(10, 10, 1)
 material = SubResource("StandardMaterial3D_cbcl8")
 
+[node name="Wall8" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 4.5, 6)
+use_collision = true
+size = Vector3(10, 10, 1)
+material = SubResource("StandardMaterial3D_cbcl8")
+
+[node name="Wall9" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 7.494, 0)
+use_collision = true
+size = Vector3(2, 10, 1)
+material = SubResource("StandardMaterial3D_cbcl8")
+
+[node name="Wall10" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 10.5, 4.5, -5.99864)
+use_collision = true
+size = Vector3(10, 10, 1)
+material = SubResource("StandardMaterial3D_cbcl8")
+
+[node name="Wall7" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 10, 0)
+use_collision = true
+size = Vector3(20, 20, 1)
+material = SubResource("StandardMaterial3D_cbcl8")
+
 [node name="door_present" parent="." instance=ExtResource("5_my8ef")]
-transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, -9.827, 0.954, -0.2)
+transform = Transform3D(-4.80825e-09, 0, 0.11, 0, 0.11, 0, -0.11, 0, -4.80825e-09, -9.88, 0.838, -0.229)
+
+[node name="button" parent="." instance=ExtResource("6_sxjfy")]
+transform = Transform3D(4.76995e-09, 0.4, 0, -0.4, 4.76995e-09, 0, 0, 0, 0.4, -10.0963, 1.61045, 1.88818)
+
+[node name="StaticBody3D" parent="button/Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode/Bouton_2/Object_8" index="0" node_paths=PackedStringArray("door")]
+door = NodePath("../../../../../../../../door_present")
+
+[node name="Panel_Light" parent="." instance=ExtResource("7_6atw4")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 9.58412, 0)
+
+[editable path="button"]
+[editable path="button/Sketchfab_Scene"]

@@ -1,5 +1,6 @@
 extends StaticBody3D
 @export var animplayer : AnimationPlayer
+@export var door : Node3D
 signal door_open
 var emitted = false
 
@@ -8,4 +9,4 @@ func interacted():
 	animplayer.play("Animation")
 	await animplayer.animation_finished
 	emitted = true
-	door_open.emit()
+	door.door_open()

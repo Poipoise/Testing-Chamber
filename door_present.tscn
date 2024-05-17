@@ -51,7 +51,7 @@ script = ExtResource("1_xko3r")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
 
 [node name="������_����������������_0" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode/������" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 1.42109e-14, 0, -1.42109e-14, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 5, -1.42109e-14, 0, -5.68434e-14, 1, 0, 3.53515, 0)
 
 [node name="������_001" parent="Sketchfab_Scene/Sketchfab_model/2e63bc41292947a5a589f9acb7a09da3_fbx/RootNode" index="1"]
 transform = Transform3D(882.02, 0, 0, 0, -5.80482e-06, 1296.92, 0, -35.6297, -0.000211295, 575.41, 312.087, 3.05176e-05)
